@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Operadores y Expresiones en Python - Reto Rápido</title>
+<style>
+body{margin:0;font-family:Segoe UI,Arial;background:linear-gradient(135deg,#0f172a,#1e3a8a,#4f46e5);color:#fff}
+header{text-align:center;padding:20px}
+h1{margin:0}
+.container{max-width:950px;margin:auto;padding:20px}
+.progress{height:18px;background:#ffffff33;border-radius:20px;overflow:hidden}
+#bar{height:100%;width:0;background:#22c55e;transition:.4s}
+.card{background:#ffffff12;border:1px solid #ffffff33;border-radius:18px;padding:18px;margin:22px 0;backdrop-filter:blur(8px)}
+.opt{display:block;width:100%;margin:8px 0;padding:12px;border:none;border-radius:10px;cursor:pointer;font-size:16px}
+.opt:hover{transform:scale(1.01)}
+.good{background:#22c55e;color:#fff}.bad{background:#ef4444;color:#fff}
+.badge{float:right}
+.footer{text-align:center;padding:20px;color:#ddd}
+svg{width:120px;height:120px;float:right}
+#result{font-size:24px;font-weight:bold;text-align:center}
+.qr{display:flex;gap:20px;align-items:center;justify-content:center;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<header>
+<h1>🐍 Operadores y Expresiones en Python: Reto Rápido</h1>
+<p>Selecciona la respuesta correcta y observa tu avance.</p>
+</header>
+<div class="container">
+<div class="progress"><div id="bar"></div></div>
+<div id="quiz"></div>
+<div id="result"></div>
+
+<div class="card qr">
+<div>
+<h2>📱 Acceso mediante QR</h2>
+<p>Publica este archivo en Moodle, GitHub Pages o el sitio web de tu universidad y genera un QR con la URL pública.</p>
+</div>
+<svg viewBox="0 0 100 100">
+<rect width="100" height="100" fill="white"/>
+<rect x="8" y="8" width="20" height="20"/><rect x="72" y="8" width="20" height="20"/>
+<rect x="8" y="72" width="20" height="20"/>
+<rect x="40" y="40" width="8" height="8"/><rect x="56" y="40" width="8" height="8"/>
+<rect x="48" y="56" width="8" height="8"/><rect x="64" y="64" width="8" height="8"/>
+<text x="50" y="98" font-size="6" text-anchor="middle">QR ilustrativo</text>
+</svg>
+</div>
+</div>
+
+<script>
+const data=[
+{
+img:"%",
+q:"¿Cuál es la salida de print(10 % 4)?",
+a:1,
+o:["4","2","10","0"]
+},
+{
+img:"**",
+q:"¿Cuál es la salida de print(3 ** 3)?",
+a:2,
+o:["9","6","27","81"]
+},
+{
+img:"🐍",
+q:"¿Cuál es la salida de print('Hola'*2)?",
+a:2,
+o:["Hola Hola","Hola2","HolaHola","Error"]
+},
+{
+img:">",
+q:"¿Qué devuelve 7 > 9?",
+a:1,
+o:["True","False","Error","9"]
+},
+{
+img:"NOT",
+q:"¿Qué devuelve not(True and False)?",
+a:0,
+o:["True","False","None","0"]
+}
+];
+let done=0,score=0;
+const quiz=document.getElementById("quiz");
+data.forEach((e,i)=>{
+const c=document.createElement("div");
+c.className="card";
+c.innerHTML=`<svg viewBox="0 0 100 100">
+<circle cx="50" cy="50" r="45" fill="#38bdf8"/>
+<text x="50" y="58" font-size="24" text-anchor="middle">${e.img}</text>
+</svg>
+<h2>Pregunta ${i+1}</h2><p>${e.q}</p>`;
+e.o.forEach((op,j)=>{
+const b=document.createElement("button");
+b.className="opt";
+b.textContent=op;
+b.onclick=()=>{
+if(c.dataset.done)return;
+c.dataset.done=1;
+[...c.querySelectorAll("button")].forEach(x=>x.disabled=true);
+if(j===e.a){b.classList.add("good");score++;}
+else{
+b.classList.add("bad");
+c.querySelectorAll("button")[e.a].classList.add("good");
+}
+done++;
+document.getElementById("bar").style.width=(done/data.length*100)+"%";
+if(done===data.length){
+let medal="🥉";
+if(score===5)medal="🥇";
+else if(score>=4)medal="🥈";
+document.getElementById("result").innerHTML=`${medal}<br>Puntaje final: ${score}/5`;
+}
+};
+c.appendChild(b);
+});
+quiz.appendChild(c);
+});
+</script>
+<div class="footer">Diseñado para clases universitarias de Python.</div>
+</body>
+</html>
